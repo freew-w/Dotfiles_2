@@ -1,5 +1,5 @@
 vim.opt.autoindent = true
-vim.cmd("filetype indent on")
+vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.shiftround = true
 vim.opt.expandtab = true
