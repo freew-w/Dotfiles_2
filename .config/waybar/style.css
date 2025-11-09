@@ -54,7 +54,8 @@
 #clock:hover,
 #workspaces > button:hover,
 #custom-swaync:hover,
-#pulseaudio:hover {
+#pulseaudio:hover,
+#backlight:hover {
     transition: all 0.3s ease-out;
     background: @primary;
     color: @on_primary;
