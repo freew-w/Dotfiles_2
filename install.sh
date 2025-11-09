@@ -51,6 +51,7 @@ install_dependencies() {
     grim slurp
     tuned
     playerctl
+    zsh
     "
 
     essentials_aur="
@@ -94,6 +95,15 @@ install_yay() {
     log "Yay installed -- skipping"
 }
 
+install_oh_my_zsh() {
+    if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+        log "Installing oh my zsh"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        return 0
+    fi
+    log "Oh my zsh installed -- skipping"
+}
+
 link_configs_stow() {
     if ! which stow &> /dev/null; then
         log "Installing stow"
@@ -118,6 +128,7 @@ link_configs_stow() {
 generate_color_files() {
     wallpaper_path="$HOME/wallpapers/55.png"
     [[ ! -f "$wallpaper_path" ]] && error "$wallpaper_path doesn't exist. Did stow failed to link it?"
+
     matugen image "$wallpaper_path"
     ln -sf "$wallpaper_path" "$HOME/.current_wallpaper"
 }
@@ -125,7 +136,7 @@ generate_color_files() {
 main() {
     log "Starting installation"
 
-    confirm_yes "Install dependencies?" && install_yay && install_dependencies
+    confirm_yes "Install dependencies?" && install_yay && install_dependencies && install_oh_my_zsh
 
     confirm_yes "Stow the configs? (Create symlinks with GNU Stow)" && link_configs_stow
 
