@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# RED="\033[0;31m"
+RED="\033[0;31m"
 GREEN="\033[0;32m"
 # YELLOW="\033[0;33m"
 NC="\033[0m"
 
-# error() {
-#     echo -e "${RED}[ERROR]${NC} $1"
-# }
+error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
 
 log() {
     echo -e "${GREEN}[LOG]${NC} $1"
@@ -19,7 +19,7 @@ log() {
 
 # default to n
 confirm_no() {
-    read -p "$1 " -n 1 -r reply
+    read -p "$1 [y/N] " -n 1 -r reply
     [[ -n "$reply" ]] && echo # new line if enter is not pressed
     [[ $reply =~ [yY] ]] && return 0 # yes, exit code 0
     return 1 # no, exit code 1
@@ -27,7 +27,7 @@ confirm_no() {
 
 # default to y
 confirm_yes() {
-    read -p "$1 " -n 1 -r reply
+    read -p "$1 [Y/n] " -n 1 -r reply
     [[ -n "$reply" ]] && echo # new line if enter is not pressed
     [[ $reply =~ [nN] ]] && return 1 # no, exit code 1
     return 0 # yes, exit code 0
@@ -76,7 +76,7 @@ install_dependencies() {
 
     final="$essentials"
     for package in $optionals; do
-        confirm_no "Install $package? [y/N]" && final+=" $package "
+        confirm_no "Install optional package: $package?" && final+=" $package "
     done
     final="$(echo "$final" | xargs)"
     sudo pacman -S --needed --noconfirm $final
@@ -92,28 +92,6 @@ install_yay() {
     fi
 }
 
-link_configs() {
-    script_dir="$(cd "$(dirname "$0")" &> /dev/null && pwd -P)"
-    config_dir="$HOME/.config"
-    backup_dir="$HOME/.config_$(date +%Y%m%d_%H%M%S).bak"
-
-    for file in $script_dir/.config/*; do
-        filename="$(basename "$file")"
-
-        source_path="$script_dir/.config/$filename"
-        target_path="$config_dir/$filename"
-
-        if [[ -d "$target_path" ]]; then
-            mkdir -p "$backup_dir"
-            log "moving $target_path to $backup_dir"
-            mv "$target_path" "$backup_dir"
-        fi
-
-        log "linking $source_path to $target_path"
-        ln -sf "$source_path" "$target_path"
-    done
-}
-
 link_configs_stow() {
     if ! which stow &> /dev/null; then
         sudo pacman -S --needed --noconfirm stow
@@ -121,26 +99,36 @@ link_configs_stow() {
 
     config_dir="$HOME/.config"
     backup_dir="$HOME/.config_$(date +%Y%m%d_%H%M%S).bak"
+    script_dir="$(cd "$(dirname "$0")" &> /dev/null && pwd -P)"
 
     if [[ -d "$HOME/.config" ]]; then
         log "moving $config_dir to $backup_dir"
-        mkdir -p "$backup_dir"
         mv "$config_dir" "$backup_dir"
     fi
-    stow -t "$HOME"
+
+    log "Stowing $script_dir to $HOME"
+    stow -t "$HOME" -d "$script_dir" .
+}
+
+generate_color_files() {
+    wallpaper_path="$HOME/wallpapers/55.png"
+    [[ ! -f "$wallpaper_path" ]] && error "$wallpaper_path doesn't exist. Did stow failed to link it?"
+    matugen image "$wallpaper_path"
+    ln -sf "$wallpaper_path" "$HOME/.current_wallpaper"
 }
 
 main() {
     log "Starting installation"
 
-    confirm_yes "Install dependencies? [Y/n]" && install_yay && install_dependencies
-    if confirm_yes "Create soft links to the dots in ~/.config? [Y/n]"; then
-        if [[ $1 == "--stow" ]]; then
-            link_configs_stow
-        else
-            link_configs
-        fi
-    fi
+    confirm_yes "Install dependencies?" && install_yay && install_dependencies
+
+    confirm_yes "Stow the configs? (Create symlinks with GNU Stow)" && link_configs_stow
+
+    confirm_yes "Generate color files?" && generate_color_files
+
+    hyprctl reload &> /dev/null
+
+    log "Installation completed. Restart hyprland or reboot for all changes to take effect"
 }
 
 main $@
