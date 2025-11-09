@@ -15,3 +15,6 @@
 .config/kitty/colors.conf
 .config/rofi/colors.rasi
 .config/colors.css
+.config/gtk-4.0
+.config/nwg-look
+.config/xsettingsd
