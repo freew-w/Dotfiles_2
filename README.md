@@ -4,7 +4,8 @@ Most of them are copied from https://github.com/binnewbs/arch-hyprland
 
 ### Packages
 
-#### Required
+Official
+####
 ```
 bluez
 bluez-utils
@@ -19,7 +20,6 @@ hyprpolkitagent
 kitty
 libnotify
 materia-gtk-theme
-matugen-bin
 neovim
 network-manager-applet
 noto-fonts
@@ -41,16 +41,9 @@ tumbler
 tuned
 waybar
 wl-clipboard
-wlogout
 xdg-desktop-portal
 xdg-desktop-portal-hyprland
-yay-bin
-yay-bin-debug
 zsh
-```
-
-#### Optionals
-```
 blueman
 btop
 firefox
@@ -58,8 +51,21 @@ git
 github-cli
 lazygit
 man-db
-snapper
 stow
 ```
 
+AUR
+```
+wlogout
+matugen-bin
+```
+
 ### Start Services
+```
+sudo systemctl enable --now bluetooth
+```
+
+### Change Shell
+```
+chsh -s $(which zsh)
+```
