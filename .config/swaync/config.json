@@ -127,6 +127,11 @@
                     "command": "~/.scripts/power_profile.sh"
                 },
                 {
+                    "label": "󱂬",
+                    "type": "normal",
+                    "command": "~/.scripts/looknfeel.sh"
+                },
+                {
                     "label": "",
                     "type": "normal",
                     "command": "wlogout"
