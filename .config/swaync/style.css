@@ -24,14 +24,8 @@ button:checked:hover {
 switch {
     background: @surface_container_high;
 }
-switch:hover {
-    filter: brightness(1.2);
-}
 switch:checked {
     background: @primary_container;
-}
-switch:checked:hover {
-    filter: brightness(1.2);
 }
 
 slider {
