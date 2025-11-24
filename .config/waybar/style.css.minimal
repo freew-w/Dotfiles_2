@@ -1,0 +1,56 @@
+@import "../colors.css";
+
+* {
+    font-family: "JetBrainsMono Nerd Font Propo";
+    font-weight: bold;
+}
+
+#waybar {
+    background: @surface;
+}
+#waybar > box {
+    margin: 0;
+}
+#waybar.empty #window {
+    background: transparent;
+}
+
+#clock,
+#tray,
+#workspaces,
+#window,
+#battery,
+#custom-swaync,
+#pulseaudio,
+#backlight {
+    background: alpha(@surface_container, 0.75);
+    color: @primary;
+    margin: 3px;
+    padding: 0 10px;
+    border-radius: 0;
+}
+#workspaces > button {
+    color: @primary;
+    transition: all 0.3s ease-out;
+    border-radius: 0;
+    padding: 0 7px;
+    margin: 2px 3px;
+    border-style: none;
+    text-shadow: none;
+    box-shadow: none;
+}
+#workspaces > button.active {
+    background: @primary;
+    color: @on_primary;
+    padding: 0 17px;
+}
+
+#clock:hover,
+#workspaces > button:hover,
+#custom-swaync:hover,
+#pulseaudio:hover,
+#backlight:hover {
+    transition: all 0.3s ease-out;
+    background: @primary;
+    color: @on_primary;
+}
