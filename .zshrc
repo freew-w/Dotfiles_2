@@ -103,4 +103,4 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias h="hyprland"
-alias updrb="yay -Pw && printf 'Press Enter to continue ' && read && yay && systemctl reboot"
+alias updrb="echo 'Printing arch news' && yay -Pw && printf 'Press Enter to continue... ' && read && yay && systemctl reboot"
