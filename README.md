@@ -5,6 +5,7 @@ Most of them are copied from https://github.com/binnewbs/arch-hyprland
 ### Packages
 > just a `yay -Qeq` on my laptop
 ```
+7zip
 base
 base-devel
 blueman
@@ -67,6 +68,7 @@ ttf-jetbrains-mono
 ttf-jetbrains-mono-nerd
 tumbler
 tuned
+unzip
 waybar
 wget
 wireplumber
@@ -79,7 +81,6 @@ yay-bin-debug
 yazi
 zram-generator
 zsh
-
 ```
 
 ### Generate Other Files
