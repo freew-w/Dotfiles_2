@@ -77,7 +77,6 @@ wlogout
 xdg-desktop-portal
 xdg-desktop-portal-hyprland
 yay-bin
-yay-bin-debug
 yazi
 zram-generator
 zsh
@@ -105,4 +104,18 @@ https://ohmyz.sh/#install
 ### Apply Gtk Theme
 ```
 nwg-look
+```
+
+### Setup Auto Login
+```
+sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
+cd /etc/systemd/system/getty@tty1.service.d/
+sudo touch autologin.conf
+sudoedit autologin.conf
+```
+autologin.conf:
+```
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --noreset --noclear --autologin username - ${TERM}
 ```
