@@ -2,11 +2,10 @@
 @import "colors.rasi"
 
 configuration {
-    modi: "window,run,drun";
+    modes: "window,run,drun";
     display-drun: "Applications";
     display-window: "Windows";
     display-run: "Run";
-    drun-display-format: "{icon} {name}";
     font: "JetBrainsMono Nerd Font 10";
     show-icons: true;
 }
@@ -96,18 +95,10 @@ element {
     background-color: transparent;
     text-color: @on-surface;
 }
-// element normal.normal {
-// }
-// element normal.urgent {
-// }
-// element normal.active {
-// }
 element selected.normal {
     background-color: @primary;
     text-color: @on-primary;
 }
-// element selected.urgent {
-// }
 element selected.active {
     background-color: @tertiary;
     text-color: @on-tertiary;
@@ -136,7 +127,3 @@ textbox {
     background-color: @secondary-container;
     text-color: @on-secondary-container;
 }
-// error-message {
-//     padding: 15px;
-//     border-radius: 20px;
-// }
