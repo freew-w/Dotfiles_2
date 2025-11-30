@@ -88,6 +88,11 @@ else
   export EDITOR='nvim'
 fi
 
+# Start hyprland automatically
+if [[ -z "$DISPLAY" && "$(tty)" = "/dev/tty1" ]]; then
+    exec hyprland
+fi
+
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
 
